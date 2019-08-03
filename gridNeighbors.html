@@ -1,0 +1,96 @@
+<html>
+  <!--missing from the top
+<style>{
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer; //this gives indication to the user that it is clickable
+} -->
+</style>
+  </head>
+  <body>
+    <div id='grid'>
+    </div>
+
+  <script>
+ /*****Look at gridNeighbors_thePlan.js for long comment desribing this entire script*/
+
+  //generating a 2-dimensional array
+  //setting up value of rows
+  //looping each 5'x for each of the rows
+  // empty array pushed into rows
+  //empty array is filled w/random nums in j for loop
+
+    const rows = [];
+    for (let i =0; i < 5; i++) {
+      const row = [];
+      rows.push(row); // notice empty array
+      for(let j = 0; j < 5; j++) {
+        row.push(Math.round(Math.random()*4));
+      }
+    }
+    console.log(rows);
+
+    /*generating HTML by looping over rows, using map func.
+    for each row you have string literal outer <div> rows & inner <div> cells
+    my ex. using 5,1 <div class='row'>5<div class='cell'>1</div></div> */
+
+    const html = rows.map( row => `
+      <div class='row'>
+      ${ row.map(digit => `<div class='cell'>${digit}</div>`).join('')}
+      </div>
+      `).join('');
+
+    const grid = document.querySelector('#grid');
+
+    grid.innerHTML = html;
+
+    /* look for our location on the grid using eventListener
+    find out where I am in the coordinate system using our rdx and cdx.
+    Also use my index to locate my neighbors in relation to me (rdx,cdx):
+      neighbors can be:
+      above: rdx - 1, below: rdx + 1
+      and
+      to the left: cdx-1, to the right: cdx +1
+    */
+    grid.addEventListener('click', (evt)=> {
+      const cell = evt.target;
+      const row = cell.parentNode;
+      const grid = row.parentNode;
+      const cdx = [...row.children].indexOf(cell);
+      const rdx = [...row.children].indexOf(row);
+      // console.log(rdx, cdx);// my location
+
+      // these are the points to all my neighbors around me
+      //the hard part!!!!
+      const pts [
+        [rdx - 1, cdx - 1 ],
+        [rdx - 1, cdx ],
+        [rdx - 1, cdx + 1],
+        [rdx, cdx - 1],
+        [rdx, cdx + 1],
+        [rdx + 1, cdx - 1],
+        [rdx + 1, cdx ],
+        [rdx + 1, cdx + 1 ]
+      ];
+      //console.log(pts); //'Hello, neighbors!'
+
+      //total up the points of my neighbors around me
+      let total = 0; //total needs to be a let
+      pts.forEach( point => {
+        const rdx = point[0];
+        const cdx = point[1];
+        // vvv take care of my edge cases vvv
+        if (rows[rdx] && rows[rdx][cdx]) {
+          total += rows[rdx][cdx]; //get my values and add them up
+        }
+
+      });
+      console.log(total)
+
+
+
+    });
+  </script>
+  </body>
+</html>

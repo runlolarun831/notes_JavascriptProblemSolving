@@ -1,0 +1,40 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <script>
+      /*separating the business logic from the user interaction*/
+      const employees = [
+        { id: 1, name: 'moe'},
+        { id: 2, name: 'larry'},
+        { id: 4, name: 'shep'},
+        { id: 3, name: 'curly'},
+        { id: 5, name: 'groucho'},
+        { id: 6, name: 'harpo'},
+        { id: 8, name: 'shep Jr.'},
+        { id: 99, name: 'lucy'}
+      ];
+
+      //pass in employee, avoid global variables, pass in id
+      const toggleFavorite = (employees, id)=> {
+        const employee = employees.find(employee => employee.id ===id);
+        const favorites = employees.filter(employee => employee.isFavorite);
+        if (favorites.length === 3 && !employee.isFavorite){
+          alert('you already have 3 favorites');
+        }
+        else {
+          employee.isFavorite = !employee.isFavorite;
+        }
+
+      }
+      toggleFavorite(employees, 1);
+      toggleFavorite(employees, 2);
+      toggleFavorite(employees, 4);
+      toggleFavorite(employees, 2);
+      toggleFavorite(employees, 3);
+      console.log(employees);
+
+
+  </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<html>
+  <head>
+<style>
+#pager {
+  display: flex;
+}
+
+#pager > div {
+  width: 5rem;
+  height: 5rem;
+  border: solid 1px black;
+  border-radius: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected {
+  background-color: tomato;
+}
+  </style>
+  </head>
+    <body>
+      <div id='pager'>
+        <div data-idx='0'>1</div>
+        <div data-idx='1' class='selected'>2</div>
+        <div data-idx='2'>3</div>
+      </div>
+      <div>Total Items 13. 5 Items per page. You are looking at page 2</div>
+      <script>
+        //generate a structure that makes it easier to dynamically generate this type ofHTML
+        const generatePager = (totalItems, itemsPerPage, currentPage)=> {
+          const pages = [];
+          if(currentPage === undefined) {
+            currentPage = 0;
+          }
+          const totalPages = Math.ceil(totalItems/itemsPerPage);
+          //console.log(totalPages);
+          for(let i =0; i <totalPages; i++) {
+            pages.push({
+              idx: i,
+              selected: currentPage === i,
+              text: i + 1
+            });
+          }
+          return pages;
+        }
+
+    const generateHTMLForPager = (pages)=> {
+      console.log(pages);
+      //loop over pages to generate the html
+    };
+
+    generateHTMLForPager(generatePager(14,5, 1));
+
+      </script>
+    </body>
+</html>
